@@ -20,8 +20,7 @@ ON DONHANG_GIAOHANG.MaKhuvucGiaoHang = KHUVUC.MaKhuVuc
 WHERE YEAR(NgayGiaoHang) = 2017 AND TenKhuVuc ="Hai Chau"
 
 /*Liệt kê MaDonHangGiaoHang, MaThanhVienGiaoHang, TenThanhVienGiaoHang, 
-NgayGiaoHang, PhuongThucThanhToan của tất cả những đơn hàng có trạng thái là "Da giao hang". Kết 
-quả hiển  thị được sắp xếp tăng dần theo NgayGiaoHang và giảm dần theo PhuongThucThanhToan*/
+NgayGiaoHang, PhuongThucThanhToan của tất cả những đơn hàng có trạng thái là "Da giao hang". Kết quả hiển  thị được sắp xếp tăng dần theo NgayGiaoHang và giảm dần theo PhuongThucThanhToan*/
 SELECT MaDonHangGiaoHang, MaThanhVienGiaoHang, TenThanhVienGiaoHang, NgayGiaoHang, PhuongThucThanhToan FROM DONHANG_GIAOHANG
 INNER JOIN THANHVIENGIAOHANG
 ON DONHANG_GIAOHANG.MaThanhVienGiaoHang = THANHVIENGIAOHANG.MaThanhVienGiaoHang
@@ -57,4 +56,16 @@ ON DONHANG_GIAOHANG.MaKhuVucGiaoHang = KHUVUC.MaKhuVuc
 WHERE Gioitinh = "Nu" AND TenKhuVuc = "Hai Chau"
 GROUP BY THANHVIENGIAOHANG.MaThanhVienGiaoHang
 HAVING COUNT(DISTINCT MaKhachHang) = 10;
+
+/*Liệt kê những khách hàng đã từng yêu cầu giao hàng tại khu vực "Lien Chieu" và chưa từng 
+được một thành viên giao hàng nào có giới tính là "Nam" nhận giao hàng.*/
+SELECT KHACHHANG.* FROM KHACHHANG INNER JOIN DONHANG_GIAOHANG ON KHACHHANG.MaKhachHang = DONHANG_GIAOHANG.MaKhachHang
+INNER JOIN KHUVUC ON DONHANG_GIAOHANG.MaKhuVuc = KHUVUC.MaKhuVuc
+WHERE KHUVUC.TenKhuVuc = 'Lien Chieu'
+EXCEPT 
+SELECT KHACHHANG.* FROM KHACHHANG INNER JOIN DONHANG_GIAOHANG ON KHACHHANG.MaKhachHang = DONHANG_GIAOHANG.MaKhachHang
+INNER JOIN THANHVIENGIAOHANG ON DONHANG_GIAOHANG.MaThanhVienGiaoHang = THANHVIENGIAOHANG.MaThanhVienGiaoHang
+WHERE THANHVIENGIAOHANG.GioiTinh = 'Nam'
+
+
 
