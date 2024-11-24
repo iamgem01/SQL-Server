@@ -5,33 +5,33 @@ WHERE TenKhachHang = "Le Thi A";
 /* Cập nhật những khách hàng đang thường trú ở khu vực "Son Tra" thành khu vực "Ngu Hanh 
 Son"*/
 UPDATE KHACHHANG
-SET DiaChiNhanHang = "Son Tra"
-WHERE DiaChiNhanHang = "Ngu Hanh Son"
+SET DiaChiNhanHang = 'Son Tra'
+WHERE DiaChiNhanHang = 'Ngu Hanh Son';
 
 /* Liệt kê những thành viên (shipper) có họ tên bắt đầu là ký tự 'Tr' và có độ dài ít nhất là 25 ký tự 
 (kể cả ký tự trắng) */
 SELECT TenThanhVienGiaoHang FROM THANHVIENGIAOHANG
-WHERE TenThanhVienGiaoHang LIKE "Tr% AND len(TenThanhVienGiaoHang) >= 25
+WHERE TenThanhVienGiaoHang LIKE 'Tr%' AND len(TenThanhVienGiaoHang) >= 25;
 
-/*Liệt kê những đơn hàng có NgayGiaoHang nằm trong năm 2017 và có khu vực giao hàng là "Hai 
-Chau"*/
+/* Liệt kê những đơn hàng có NgayGiaoHang nằm trong năm 2017 và có khu vực giao hàng là Hai 
+Chau */
 SELECT * FROM DONHANG_GIAOHANG INNER JOIN KHUVUC
 ON DONHANG_GIAOHANG.MaKhuvucGiaoHang = KHUVUC.MaKhuVuc
-WHERE YEAR(NgayGiaoHang) = 2017 AND TenKhuVuc ="Hai Chau"
+WHERE YEAR(NgayGiaoHang) = 2017 AND TenKhuVuc ='Hai Chau'
 
 /*Liệt kê MaDonHangGiaoHang, MaThanhVienGiaoHang, TenThanhVienGiaoHang, 
 NgayGiaoHang, PhuongThucThanhToan của tất cả những đơn hàng có trạng thái là "Da giao hang". Kết quả hiển  thị được sắp xếp tăng dần theo NgayGiaoHang và giảm dần theo PhuongThucThanhToan*/
 SELECT MaDonHangGiaoHang, MaThanhVienGiaoHang, TenThanhVienGiaoHang, NgayGiaoHang, PhuongThucThanhToan FROM DONHANG_GIAOHANG
 INNER JOIN THANHVIENGIAOHANG
 ON DONHANG_GIAOHANG.MaThanhVienGiaoHang = THANHVIENGIAOHANG.MaThanhVienGiaoHang
-WHERE TrangThaiGiaoHang LIKE "Da giao hang"
+WHERE TrangThaiGiaoHang LIKE 'Da giao hang'
 ORDER BY NgayGiaoHang ASC, PhuongThucThanhToan DESC
 
 /*Liệt kê những thành viên có giới tính là "Nam" và chưa từng được giao hàng lần nào.*/
 SELECT * FROM THANHVIENGIAOHANG
 INNER JOIN DONHANG_GIAOHANG
 ON THANHVIENGIAOHANG.MaThanhVienGiaoHang = DONHANG_GIAOHANG.MaThanhVienGiaoHang
-WHERE GioiTinh = "Nam" AND TrangThaiGiaoHang = "Chua Giao Hang"
+WHERE GioiTinh = 'Nam' AND TrangThaiGiaoHang = 'Chua Giao Hang'
 
 /*Liệt kê họ tên của những khách hàng đang có trong hệ thống. Nếu họ tên trùng nhau thì chỉ hiển 
 thị 1 lần. Học viên cần thực hiện yêu cầu này bằng 2 cách khác nhau */
